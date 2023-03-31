@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+    <definition name="baseLayout" template="/WEB-INF/layout/base.jsp">
+        <put-attribute name="title" value="" />
+        <put-attribute name="header" value="/WEB-INF/layout/header.jsp" />
+        <put-attribute name="dashboard" value="/WEB-INF/layout/dashboard.jsp" />
+        <put-attribute name="content" value="" />
+    </definition>
+    <definition name="home" extends="baseLayout">
+        <put-attribute name="title" value="Trang chủ" />
+        <put-attribute name="content" value="/WEB-INF/pages/index.jsp" />
+    </definition>
+    <definition name="shipperpage" extends="baseLayout">
+        <put-attribute name="title" value="Shipper" />
+        <put-attribute name="content" value="/WEB-INF/pages/shipperpage.jsp" />
+    </definition>
+    <definition name="shipperdetailpage" extends="baseLayout">
+        <put-attribute name="title" value="Shipper Detail" />
+        <put-attribute name="content" value="/WEB-INF/pages/shipperdetailpage.jsp" />
+    </definition>
+    <definition name="login" extends="baseLayout">
+        <put-attribute name="title" value="Login" />
+        <put-attribute name="content" value="/WEB-INF/pages/login.jsp" />
+    </definition>
+    <definition name="signupcustomer" extends="baseLayout">
+        <put-attribute name="title" value="Signup Customer" />
+        <put-attribute name="content" value="/WEB-INF/pages/signupcustomer.jsp" />
+    </definition>
+</tiles-definitions>
+
