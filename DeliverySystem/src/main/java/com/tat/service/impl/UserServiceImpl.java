@@ -7,11 +7,13 @@ package com.tat.service.impl;
 import com.tat.pojos.User;
 import com.tat.repository.UserRepository;
 import com.tat.service.UserService;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,11 +26,14 @@ import org.springframework.transaction.annotation.Transactional;
  *
  * @author trant
  */
-@Service
+@Service("userDetailsService")
 public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
+    
+    @Autowired
+    private LocalSessionFactoryBean sessionFactory;
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -37,21 +42,20 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public boolean addUser(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-
-        user.setDateJoined(new Date());
-        user.setUpdatedDate(new Date());
+        DateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date today = new Date();
+        user.setUpdatedDate(formatDate.format(today));
+        user.setDateJoined(formatDate.format(today));
         
         return this.userRepository.addUser(user);
     }
 
     @Override
-    @Transactional(readOnly = true)
     public User getUsers(String username) {
         return this.userRepository.getUsers(username);
     }
 
     @Override
-    @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User u = this.getUsers(username);
         if (u == null) {

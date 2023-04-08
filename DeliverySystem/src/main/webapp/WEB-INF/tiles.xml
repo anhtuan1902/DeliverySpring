@@ -9,25 +9,37 @@
         <put-attribute name="dashboard" value="/WEB-INF/layout/dashboard.jsp" />
         <put-attribute name="content" value="" />
     </definition>
-    <definition name="home" extends="baseLayout">
+    <definition name="index" extends="baseLayout">
         <put-attribute name="title" value="Trang chủ" />
         <put-attribute name="content" value="/WEB-INF/pages/index.jsp" />
     </definition>
+    <definition name="home" extends="baseLayout">
+        <put-attribute name="title" value="Trang chủ" />
+        <put-attribute name="content" value="/WEB-INF/pages/home.jsp" />
+    </definition>
     <definition name="shipperpage" extends="baseLayout">
-        <put-attribute name="title" value="Shipper" />
+        <put-attribute name="title" value="Người giao hàng" />
         <put-attribute name="content" value="/WEB-INF/pages/shipperpage.jsp" />
     </definition>
     <definition name="shipperdetailpage" extends="baseLayout">
-        <put-attribute name="title" value="Shipper Detail" />
+        <put-attribute name="title" value="Thông tin người giao hàng" />
         <put-attribute name="content" value="/WEB-INF/pages/shipperdetailpage.jsp" />
     </definition>
     <definition name="login" extends="baseLayout">
-        <put-attribute name="title" value="Login" />
+        <put-attribute name="title" value="Đăng nhập" />
         <put-attribute name="content" value="/WEB-INF/pages/login.jsp" />
     </definition>
-    <definition name="signupcustomer" extends="baseLayout">
-        <put-attribute name="title" value="Signup Customer" />
-        <put-attribute name="content" value="/WEB-INF/pages/signupcustomer.jsp" />
+    <definition name="signup" extends="baseLayout">
+        <put-attribute name="title" value="Đăng kí tài khoản" />
+        <put-attribute name="content" value="/WEB-INF/pages/signup.jsp" />
+    </definition>
+    <definition name="customerforminfo" extends="baseLayout">
+        <put-attribute name="title" value="Thông tin người dùng" />
+        <put-attribute name="content" value="/WEB-INF/pages/customerforminfo.jsp" />
+    </definition>
+    <definition name="discounts" extends="baseLayout">
+        <put-attribute name="title" value="Mã giảm giá" />
+        <put-attribute name="content" value="/WEB-INF/pages/discountspage.jsp" />
     </definition>
 </tiles-definitions>
 

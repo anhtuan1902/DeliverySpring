@@ -5,9 +5,7 @@
 package com.tat.pojos;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.Set;
-import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,8 +16,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -52,60 +48,44 @@ public class User implements Serializable {
     public static final String ADMIN = "ADMIN_ROLE";
     public static final String CUSTOMER = "CUSTOMER_ROLE";
     public static final String SHIPPER = "SHIPPER_ROLE";
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 3L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Basic(optional = false)
     @NotNull
     @NotEmpty(message = "{user.password.sizeMsg}")
     @Column(name = "password")
     private String password;
     @Transient
     private String confirmPassword;
-    @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45, message = "{user.username.sizeMsg}")
     @Column(name = "username")
     private String username;
-    @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 150)
     @Column(name = "first_name")
     private String firstName;
-    @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 150)
     @Column(name = "last_name")
     private String lastName;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "is_active")
     private boolean isActive;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "date_joined")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dateJoined;
+    private String dateJoined;
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
-    @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 254)
     @Pattern(regexp = "^[A-Za-z0-9+_.-]+@(.+)$", message = "{user.email.error.invalidMsg}")
     @Column(name = "email")
     private String email;
-    @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 20)
     @Column(name = "user_role")
     private String userRole;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "updated_date")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date updatedDate;
+    private String updatedDate;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
     private Set<Shipper> shipperSet;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
@@ -124,7 +104,7 @@ public class User implements Serializable {
         this.id = id;
     }
 
-    public User(Integer id, String password, String username, String firstName, String lastName, boolean isActive, Date dateJoined, String email, String userRole, Date updatedDate) {
+    public User(Integer id, String password, String username, String firstName, String lastName, boolean isActive, String dateJoined, String email, String userRole, String updatedDate) {
         this.id = id;
         this.password = password;
         this.username = username;
@@ -185,14 +165,18 @@ public class User implements Serializable {
         this.isActive = isActive;
     }
 
-    public Date getDateJoined() {
+    public String getDateJoined() {
         return dateJoined;
     }
 
-    public void setDateJoined(Date dateJoined) {
+    public void setDateJoined(String dateJoined) {
         this.dateJoined = dateJoined;
     }
-
+    
+    public String getFullName(){
+        return lastName + " " + firstName;
+    }
+    
     public String getEmail() {
         return email;
     }
@@ -209,11 +193,11 @@ public class User implements Serializable {
         this.userRole = userRole;
     }
 
-    public Date getUpdatedDate() {
+    public String getUpdatedDate() {
         return updatedDate;
     }
 
-    public void setUpdatedDate(Date updatedDate) {
+    public void setUpdatedDate(String updatedDate) {
         this.updatedDate = updatedDate;
     }
 
@@ -282,5 +266,7 @@ public class User implements Serializable {
     public void setConfirmPassword(String confirmPassword) {
         this.confirmPassword = confirmPassword;
     }
+    
+    
 
 }

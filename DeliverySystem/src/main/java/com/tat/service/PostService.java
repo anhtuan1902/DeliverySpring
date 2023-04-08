@@ -13,5 +13,7 @@ import java.util.List;
  */
 public interface PostService {
     List<Post> getPosts();
-    boolean addOrUpdatePost(Post p);
+    Post getPostById(int id);
+    boolean addPost(Post post);
+    boolean deletePost(int id);
 }

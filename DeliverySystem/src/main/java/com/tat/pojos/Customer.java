@@ -20,7 +20,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -46,7 +45,6 @@ public class Customer implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 100)
     @Column(name = "avatar")
     private String avatar;
@@ -73,6 +71,12 @@ public class Customer implements Serializable {
     public Customer(Integer id, String avatar) {
         this.id = id;
         this.avatar = avatar;
+    }
+    
+    public Customer(Integer id, String avatar, User user) {
+        this.id = id;
+        this.avatar = avatar;
+        this.userId = user;
     }
 
     public Integer getId() {

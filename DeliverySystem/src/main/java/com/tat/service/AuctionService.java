@@ -13,4 +13,6 @@ import java.util.List;
  */
 public interface AuctionService {
     List<Auction> getAuctions();
+    int countAuction();
+    Auction addAuction(String content, double price, int postId);
 }

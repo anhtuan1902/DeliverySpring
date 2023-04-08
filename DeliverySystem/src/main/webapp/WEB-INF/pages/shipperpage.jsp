@@ -15,7 +15,7 @@
 <div style="width: 80%" >
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
         <c:forEach items="${shippers}" var="shipper">
-            <c:url value="/shipper/${shipper.id}" var="detail"/>
+            <c:url value="/home/shipper/${shipper.id}" var="detail"/>
             <div class="col">
                 <a href="${detail}" class="card h-100 rounded-4 shadow">
                     <img src="${shipper.avatar}" class="card-img-top p-3" alt="${shipper.id}">

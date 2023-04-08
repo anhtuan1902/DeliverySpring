@@ -5,9 +5,10 @@
 package com.tat.pojos;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Set;
-import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,8 +21,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -49,43 +48,26 @@ import org.springframework.web.multipart.MultipartFile;
     @NamedQuery(name = "Post.findByDescription", query = "SELECT p FROM Post p WHERE p.description = :description")})
 public class Post implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 3L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
     @Column(name = "id")
-    private Long id;
-    @Basic(optional = false)
-    @NotNull(message = "{post.null}")
+    private Integer id;
     @Column(name = "created_date")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createdDate;
-    @Basic(optional = false)
-    @NotNull(message = "{post.null}")
+    private String createdDate;
     @Column(name = "updated_date")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date updatedDate;
-    @Basic(optional = false)
-    @NotNull(message = "{post.null}")
+    private String updatedDate;
     @Column(name = "active")
     private boolean active;
-    @Basic(optional = false)
-    @NotNull(message = "{post.null}")
     @Size(min = 1, max = 50, message = "{post.product_name.len}")
     @Column(name = "product_name")
     private String productName;
-    @Basic(optional = false)
-    @NotNull(message = "{post.null}")
     @Size(min = 1, max = 255)
     @Column(name = "product_img")
     private String productImg;
-    @Basic(optional = false)
-    @NotNull(message = "{post.null}")
     @Size(min = 1, max = 150)
     @Column(name = "from_address")
     private String fromAddress;
-    @Basic(optional = false)
-    @NotNull(message = "{post.null}")
     @Size(min = 1, max = 150)
     @Column(name = "to_address")
     private String toAddress;
@@ -102,19 +84,25 @@ public class Post implements Serializable {
     private Set<Auction> auctionSet;
     @Transient
     private MultipartFile file;
+    @Transient
+    private Integer disId;
 
     {
         this.active = true;
+        DateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date today = new Date();
+        this.createdDate = formatDate.format(today);
+        this.updatedDate = formatDate.format(today);  
     }
     
     public Post() {
     }
 
-    public Post(Long id) {
+    public Post(Integer id) {
         this.id = id;
     }
 
-    public Post(Long id, Date createdDate, Date updatedDate, boolean active, String productName, String productImg, String fromAddress, String toAddress) {
+    public Post(Integer id, String createdDate, String updatedDate, boolean active, String productName, String productImg, String fromAddress, String toAddress) {
         this.id = id;
         this.createdDate = createdDate;
         this.updatedDate = updatedDate;
@@ -125,27 +113,27 @@ public class Post implements Serializable {
         this.toAddress = toAddress;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public Date getCreatedDate() {
+    public String getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(Date createdDate) {
+    public void setCreatedDate(String createdDate) {
         this.createdDate = createdDate;
     }
 
-    public Date getUpdatedDate() {
+    public String getUpdatedDate() {
         return updatedDate;
     }
 
-    public void setUpdatedDate(Date updatedDate) {
+    public void setUpdatedDate(String updatedDate) {
         this.updatedDate = updatedDate;
     }
 
@@ -259,6 +247,20 @@ public class Post implements Serializable {
      */
     public void setFile(MultipartFile file) {
         this.file = file;
+    }
+
+    /**
+     * @return the disId
+     */
+    public Integer getDisId() {
+        return disId;
+    }
+
+    /**
+     * @param disId the disId to set
+     */
+    public void setDisId(Integer disId) {
+        this.disId = disId;
     }
     
 }

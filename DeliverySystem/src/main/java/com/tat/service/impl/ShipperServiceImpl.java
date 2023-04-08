@@ -7,6 +7,7 @@ package com.tat.service.impl;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.tat.pojos.Shipper;
+import com.tat.pojos.User;
 import com.tat.repository.ShipperRepository;
 import com.tat.service.ShipperService;
 import java.io.IOException;
@@ -41,7 +42,7 @@ public class ShipperServiceImpl implements ShipperService {
     }
 
     @Override
-    public void addShipper(Shipper s) {
+    public boolean addShipper(Shipper s) {
         if (!s.getFile().isEmpty()) {
             try {
                 Map res = this.cloudinary.uploader().upload(s.getFile().getBytes(),
@@ -50,14 +51,16 @@ public class ShipperServiceImpl implements ShipperService {
             } catch (IOException ex) {
                 Logger.getLogger(ShipperServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
             }
+        }else{
+            s.setAvatar("https://res.cloudinary.com/dzk2a3akv/image/upload/v1679593418/ImageSpring/avatar-default_ptjnjt.png");
         }
 
-        this.shipperRepository.addShipper(s);
+        return this.shipperRepository.addShipper(s);
     }
 
     @Override
-    public Shipper getShipperByUserId(int userId) {
-        return this.shipperRepository.getShipperById(userId);
+    public Shipper getShipperByUserId(User userId) {
+        return this.shipperRepository.getShipperByUserId(userId);
     }
 
 }

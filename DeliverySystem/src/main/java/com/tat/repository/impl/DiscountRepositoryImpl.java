@@ -8,6 +8,7 @@ import com.tat.pojos.Discount;
 import com.tat.repository.DiscountRepository;
 import java.util.List;
 import javax.persistence.Query;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
@@ -26,12 +27,34 @@ public class DiscountRepositoryImpl implements DiscountRepository{
 
     @Override
     public List<Discount> getDiscounts() {
-        Session s = sessionFactory.getObject().getCurrentSession();
+        Session s = this.sessionFactory.getObject().getCurrentSession();
         Query q = s.createQuery("From Discount d " + "Where d.active=:t");
         q.setParameter("t", true);
         
         return q.getResultList();
     }
-    
-    
+
+    @Override
+    public boolean addDiscount(Discount discount) {
+        Session s = this.sessionFactory.getObject().getCurrentSession();
+        try {
+            s.save(discount);
+            return true;
+        } catch (HibernateException ex) {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean deleteDiscount(int discountId) {
+        Session s = this.sessionFactory.getObject().getCurrentSession();
+        Discount d = s.get(Discount.class, discountId);
+        try {
+            d.setActive(false);
+            s.update(d);
+            return true;
+        } catch (HibernateException ex) {
+            return false;
+        }
+    }
 }

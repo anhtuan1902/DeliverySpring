@@ -5,6 +5,7 @@
 package com.tat.service;
 
 import com.tat.pojos.Shipper;
+import com.tat.pojos.User;
 import java.util.List;
 import java.util.Map;
 
@@ -15,6 +16,6 @@ import java.util.Map;
 public interface ShipperService {
     List<Shipper> getShippers(Map<String, String> params);
     Shipper getShipperById(int id);
-    Shipper getShipperByUserId(int userId);
-    void addShipper(Shipper s);
+    Shipper getShipperByUserId(User userId);
+    boolean addShipper(Shipper s);
 }

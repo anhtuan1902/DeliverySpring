@@ -48,17 +48,14 @@ public class Shipper implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 100)
     @Column(name = "avatar")
     private String avatar;
     @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 50)
     @Column(name = "CMND")
     private String cmnd;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "already_verify")
     private boolean alreadyVerify;
     @JoinColumn(name = "user_id", referencedColumnName = "id")

@@ -21,28 +21,48 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Repository
 @Transactional
-public class PostRepositoryImpl implements PostRepository{
+public class PostRepositoryImpl implements PostRepository {
+
     @Autowired
     private LocalSessionFactoryBean sessionFactory;
-    
+
     @Override
     public List<Post> getPosts() {
-        Session s = sessionFactory.getObject().getCurrentSession();
+        Session s = this.sessionFactory.getObject().getCurrentSession();
         Query q = s.createQuery("From Post p " + "Where p.active=:t");
-        
+
         q.setParameter("t", true);
         return q.getResultList();
     }
 
     @Override
-    public boolean addOrUpdatePost(Post p) {
+    public boolean addPost(Post post) {
         Session s = this.sessionFactory.getObject().getCurrentSession();
         try {
-            s.save(p);
+            s.save(post);
             return true;
         } catch (HibernateException ex) {
             return false;
         }
     }
-    
+
+    @Override
+    public boolean deletePost(int id) {
+        Session s = this.sessionFactory.getObject().getCurrentSession();
+        Post p = s.get(Post.class, id);
+        try {
+            p.setActive(false);
+            s.update(p);
+            return true;
+        } catch (HibernateException ex) {
+            return false;
+        }
+    }
+
+    @Override
+    public Post getPostById(int id) {
+        Session s = this.sessionFactory.getObject().getCurrentSession();
+        return s.get(Post.class, id);
+    }
+
 }

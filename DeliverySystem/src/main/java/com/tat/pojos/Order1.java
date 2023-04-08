@@ -44,7 +44,7 @@ public class Order1 implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
-    private Long id;
+    private Integer id;
     @Basic(optional = false)
     @NotNull
     @Column(name = "created_date")
@@ -74,11 +74,11 @@ public class Order1 implements Serializable {
     public Order1() {
     }
 
-    public Order1(Long id) {
+    public Order1(Integer id) {
         this.id = id;
     }
 
-    public Order1(Long id, Date createdDate, Date updatedDate, boolean active, String statusOrder) {
+    public Order1(Integer id, Date createdDate, Date updatedDate, boolean active, String statusOrder) {
         this.id = id;
         this.createdDate = createdDate;
         this.updatedDate = updatedDate;
@@ -86,11 +86,11 @@ public class Order1 implements Serializable {
         this.statusOrder = statusOrder;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

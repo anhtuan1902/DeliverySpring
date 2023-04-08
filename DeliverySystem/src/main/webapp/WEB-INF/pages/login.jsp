@@ -38,7 +38,7 @@
             <span></span>
             <span></span>
             <span></span>
-            Submit
+            Đăng nhập
         </button>
 
     </form>

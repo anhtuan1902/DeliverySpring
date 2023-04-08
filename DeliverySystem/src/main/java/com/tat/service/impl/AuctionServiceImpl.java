@@ -24,5 +24,15 @@ public class AuctionServiceImpl implements AuctionService{
     public List<Auction> getAuctions() {
         return this.auctionRepository.getAuctions();
     }
+
+    @Override
+    public int countAuction() {
+        return this.auctionRepository.countAuction();
+    }
+
+    @Override
+    public Auction addAuction(String content, double price, int postId) {
+        return this.auctionRepository.addAuction(content, price, postId);
+    }
     
 }

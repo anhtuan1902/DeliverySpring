@@ -5,7 +5,10 @@
 package com.tat.repository.impl;
 
 import com.tat.pojos.Customer;
+import com.tat.pojos.User;
 import com.tat.repository.CustomerRepository;
+import javax.persistence.Query;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
@@ -24,15 +27,22 @@ public class CustomerRepositoryImpl implements CustomerRepository {
     private LocalSessionFactoryBean sessionFactory;
 
     @Override
-    public void addCustomer(Customer c) {
+    public boolean addCustomer(Customer customer) {
         Session s = this.sessionFactory.getObject().getCurrentSession();
-        s.save(c);
+        try {
+            s.save(customer);
+            return true;
+        } catch (HibernateException ex) {
+            return false;
+        }
     }
 
     @Override
-    public Customer getCustomerByUserId(int userId) {
+    public Customer getCustomerByUserId(User userId) {
         Session s = this.sessionFactory.getObject().getCurrentSession();
-        return s.getReference(Customer.class, userId);
+        Query q = s.createQuery("From Customer c Where c.userId=:t");
+        q.setParameter("t", userId);
+        return (Customer) q.getSingleResult();
     }
 
 }

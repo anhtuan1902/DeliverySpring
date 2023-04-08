@@ -52,16 +52,12 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.formLogin().loginPage("/login").usernameParameter("username").passwordParameter("password");
         http.formLogin().loginPage("/login").successHandler(this.loginHandler);
-        http.formLogin().defaultSuccessUrl("/").failureUrl("/login?error");
+        http.formLogin().defaultSuccessUrl("/home/posts").failureUrl("/login?error");
         
         http.logout().logoutSuccessHandler(this.logoutHanlder);
         http.logout().logoutSuccessUrl("/login");
         
-        http.authorizeRequests().antMatchers("/").permitAll()
-                .antMatchers("/**/comments").authenticated()
-                .antMatchers("/admin/**")
-                .access("hasRole('ROLE_ADMIN')");
-        
+        http.authorizeRequests().antMatchers("/").permitAll();
         http.csrf().disable();
     }
     

@@ -24,5 +24,15 @@ public class DiscountServiceImpl implements DiscountService{
     public List<Discount> getDiscounts() {
         return this.discountRepository.getDiscounts();
     }
+
+    @Override
+    public boolean addDiscount(Discount discount) {
+        return this.discountRepository.addDiscount(discount);
+    }
+
+    @Override
+    public boolean deleteDiscount(int discountId) {
+        return this.discountRepository.deleteDiscount(discountId);
+    }
     
 }

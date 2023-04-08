@@ -5,12 +5,13 @@
 package com.tat.service;
 
 import com.tat.pojos.Customer;
+import com.tat.pojos.User;
 
 /**
  *
  * @author trant
  */
 public interface CustomerService {
-    void addCustomer(Customer c);
-    Customer getCustomerByUserId(int userId);
+    boolean addCustomer(Customer c);
+    Customer getCustomerByUserId(User userId);
 }

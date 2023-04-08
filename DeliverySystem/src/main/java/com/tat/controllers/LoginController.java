@@ -14,13 +14,13 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  *
@@ -54,34 +54,56 @@ public class LoginController {
     }
     
     @GetMapping(value = "/signup")
-    public String registerViewCustomer(Model model) {
-        User user = new User();
-        Customer customer = new Customer();
-        model.addAttribute("user", user);
-        model.addAttribute("customer", customer);
-        
-        return "signupcustomer";
+    public String registerView(ModelMap model) {
+        model.addAttribute("user", new User());
+       
+        return "signup";
     }
     
     @PostMapping(value = "/signup")
-    public String registerProcessCustomer(Model model, @ModelAttribute(name = "user") @Valid User user, 
-            @ModelAttribute(name = "customer") @Valid Customer c,
+    public String registerProcess(Model model, @ModelAttribute(name = "user") @Valid User user,
             BindingResult result) {
         if (result.hasErrors()) {
-            return "signupcustomer";
+            return "signup";
         }
-
-        user.setUserRole(User.CUSTOMER);
 
         if (this.userService.addUser(user) == true) {
-            c.setUserId(user);
-            this.customerService.addCustomer(c);
-            return "redirect:/login";
+            Customer c = new Customer();
+            c.setUserId(this.userService.getUsers(user.getUsername()));
+            if (this.customerService.addCustomer(c) == true){
+                return "redirect:/login";
+            }else{
+                model.addAttribute("errMsg", "Thông tin bị lỗi!!!");
+            }
+            
         }else {
-            model.addAttribute("errMsg", "Something wrong!!!");
+            model.addAttribute("errMsg", "Thông tin bị lỗi!!!");
         }
-        return "signupcustomer";
+        return "signup";
     }
+    
+//    @GetMapping(value = "/customerform")
+//    public String customerFormView(ModelMap model) {
+//        Customer c = new Customer();
+//        model.addAttribute("customer", c);
+//       
+//        return "customerforminfo";
+//    }
+//    
+//    @PostMapping(value = "/customerform")
+//    public String customerFormProcess(Model model, @ModelAttribute(name = "customer") @Valid Customer c,
+//            BindingResult result) {
+//        if (result.hasErrors()) {
+//            return "customerforminfo";
+//        }
+//        if (this.customerService.addCustomer(c) == true) {
+//            
+//            return "redirect:/login";
+//        }else {
+//            model.addAttribute("errMsg", "Thông tin bị lỗi!!!");
+//        }
+//        return "customerforminfo";
+//    }   
     
 //    @PostMapping(value = "/shipper/register")
 //    public String registerShipper(Model model, @ModelAttribute(name = "user") @Valid User user, 

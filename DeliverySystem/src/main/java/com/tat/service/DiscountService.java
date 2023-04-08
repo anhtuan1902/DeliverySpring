@@ -13,4 +13,6 @@ import java.util.List;
  */
 public interface DiscountService {
     List<Discount> getDiscounts();
+    boolean addDiscount(Discount discount);
+    boolean deleteDiscount(int discountId);
 }

@@ -5,6 +5,8 @@
 package com.tat.pojos;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Set;
 import javax.persistence.Basic;
@@ -50,17 +52,15 @@ public class Auction implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
-    private Long id;
+    private Integer id;
     @Basic(optional = false)
     @NotNull
     @Column(name = "created_date")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createdDate;
+    private String createdDate;
     @Basic(optional = false)
     @NotNull
     @Column(name = "updated_date")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date updatedDate;
+    private String updatedDate;
     @Basic(optional = false)
     @NotNull
     @Column(name = "active")
@@ -84,15 +84,24 @@ public class Auction implements Serializable {
     private Shipper shipperId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "auctionId")
     private Set<Order1> order1Set;
-
+    
+    {
+        this.hadAccept = false;
+        this.active = true;
+        DateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date today = new Date();
+        this.createdDate = formatDate.format(today);
+        this.updatedDate = formatDate.format(today);  
+    }
+    
     public Auction() {
     }
 
-    public Auction(Long id) {
+    public Auction(Integer id) {
         this.id = id;
     }
 
-    public Auction(Long id, Date createdDate, Date updatedDate, boolean active, boolean hadAccept, double price) {
+    public Auction(Integer id, String createdDate, String updatedDate, boolean active, boolean hadAccept, double price) {
         this.id = id;
         this.createdDate = createdDate;
         this.updatedDate = updatedDate;
@@ -101,27 +110,27 @@ public class Auction implements Serializable {
         this.price = price;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public Date getCreatedDate() {
+    public String getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(Date createdDate) {
+    public void setCreatedDate(String createdDate) {
         this.createdDate = createdDate;
     }
 
-    public Date getUpdatedDate() {
+    public String getUpdatedDate() {
         return updatedDate;
     }
 
-    public void setUpdatedDate(Date updatedDate) {
+    public void setUpdatedDate(String updatedDate) {
         this.updatedDate = updatedDate;
     }
 

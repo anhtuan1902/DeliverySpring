@@ -44,7 +44,7 @@ public class Comment implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
-    private Long id;
+    private Integer id;
     @Basic(optional = false)
     @NotNull
     @Column(name = "created_date")
@@ -75,11 +75,11 @@ public class Comment implements Serializable {
     public Comment() {
     }
 
-    public Comment(Long id) {
+    public Comment(Integer id) {
         this.id = id;
     }
 
-    public Comment(Long id, Date createdDate, Date updatedDate, boolean active, String content) {
+    public Comment(Integer id, Date createdDate, Date updatedDate, boolean active, String content) {
         this.id = id;
         this.createdDate = createdDate;
         this.updatedDate = updatedDate;
@@ -87,11 +87,11 @@ public class Comment implements Serializable {
         this.content = content;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

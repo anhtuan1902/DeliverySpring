@@ -10,7 +10,6 @@ import com.tat.pojos.Post;
 import com.tat.repository.PostRepository;
 import com.tat.service.PostService;
 import java.io.IOException;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -27,6 +26,7 @@ public class PostServiceImpl implements PostService {
 
     @Autowired
     private PostRepository postRepository;
+    
     @Autowired
     private Cloudinary cloudinary;
 
@@ -36,24 +36,28 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public boolean addOrUpdatePost(Post p) {
-        if (!p.getFile().isEmpty()) {
+    public boolean addPost(Post post) {
+        if (!post.getFile().isEmpty()) {
+            
             try {
-                Map res = this.cloudinary.uploader().upload(p.getFile().getBytes(),
+                Map res = this.cloudinary.uploader().upload(post.getFile().getBytes(),
                         ObjectUtils.asMap("resource_type", "auto"));
-                p.setProductImg(res.get("secure_url").toString());
+                post.setProductImg(res.get("secure_url").toString());
             } catch (IOException ex) {
                 Logger.getLogger(PostServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        if (p.getCreatedDate() != null && p.getUpdatedDate() != null){
-            p.setUpdatedDate(new Date());
-        } else {
-            p.setCreatedDate(new Date());
-            p.setUpdatedDate(new Date());
-        }
-        
-        return this.postRepository.addOrUpdatePost(p);
+
+        return this.postRepository.addPost(post);
     }
 
+    @Override
+    public boolean deletePost(int id) {
+        return this.postRepository.deletePost(id);
+    }
+
+    @Override
+    public Post getPostById(int id) {
+        return this.postRepository.getPostById(id);
+    }
 }

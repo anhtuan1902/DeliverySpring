@@ -5,14 +5,17 @@
 package com.tat.repository.impl;
 
 import com.tat.pojos.Shipper;
+import com.tat.pojos.User;
 import com.tat.repository.ShipperRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
@@ -62,14 +65,21 @@ public class ShipperRepositoryImpl implements ShipperRepository {
     }
 
     @Override
-    public void addShipper(Shipper shipper) {
+    public boolean addShipper(Shipper shipper) {
         Session s = this.sessionFactory.getObject().getCurrentSession();
-        s.save(shipper);
+        try {
+            s.save(shipper);
+            return true;
+        } catch (HibernateException ex) {
+            return false;
+        }
     }
 
     @Override
-    public Shipper getShipperByUserId(int userId) {
+    public Shipper getShipperByUserId(User userId) {
         Session s = this.sessionFactory.getObject().getCurrentSession();
-        return s.getReference(Shipper.class, userId);
+        Query q = s.createQuery("From Shipper s " + "Where s.userId=:t");
+        q.setParameter("t", userId);
+        return (Shipper) q.getSingleResult();
     }
 }

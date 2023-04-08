@@ -13,4 +13,5 @@ import com.tat.pojos.User;
 public interface UserRepository {
     boolean addUser(User user);
     User getUsers(String username);
+    
 }

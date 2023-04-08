@@ -8,7 +8,9 @@ import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.tat.validator.DeliveryWebValidator;
 import com.tat.validator.PassValidator;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -32,7 +34,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @EnableWebMvc
 @EnableTransactionManagement
 @ComponentScan(basePackages = {
-    "com.tat"
+    "com.tat.controllers",
+    "com.tat.repository",
+    "com.tat.service",
+    "com.dht.validator",
+    "com.dht.handlers"
 })
 public class DeliveryWebContextConfig implements WebMvcConfigurer {
 
@@ -48,6 +54,8 @@ public class DeliveryWebContextConfig implements WebMvcConfigurer {
                 .addResourceLocations("resources/css/");
         registry.addResourceHandler("/images/**")
                 .addResourceLocations("/resources/images/");
+        registry.addResourceHandler("/js/**")
+                .addResourceLocations("/resources/js/");
     }
 
     @Bean
@@ -68,10 +76,11 @@ public class DeliveryWebContextConfig implements WebMvcConfigurer {
 
     @Bean
     public Cloudinary cloudinary() {
+        // Configure
         Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
-                "cloud_name", "dzk2a3akv",
-                "api_key", "293869319815116",
-                "api_secret", "L_83MkBlZ3QelvFFIIrH58rYkMM",
+                "cloud_name", "tat1902",
+                "api_key", "176383379121422",
+                "api_secret", "Kwqp-Zmp4qUgiQKZamVLArmsicc",
                 "secure", true));
         return cloudinary;
     }

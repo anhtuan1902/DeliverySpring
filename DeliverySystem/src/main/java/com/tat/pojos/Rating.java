@@ -43,7 +43,7 @@ public class Rating implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
-    private Long id;
+    private Integer id;
     @Basic(optional = false)
     @NotNull
     @Column(name = "created_date")
@@ -72,11 +72,11 @@ public class Rating implements Serializable {
     public Rating() {
     }
 
-    public Rating(Long id) {
+    public Rating(Integer id) {
         this.id = id;
     }
 
-    public Rating(Long id, Date createdDate, Date updatedDate, boolean active, short rate) {
+    public Rating(Integer id, Date createdDate, Date updatedDate, boolean active, short rate) {
         this.id = id;
         this.createdDate = createdDate;
         this.updatedDate = updatedDate;
@@ -84,11 +84,11 @@ public class Rating implements Serializable {
         this.rate = rate;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

@@ -5,6 +5,8 @@
 package com.tat.pojos;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Set;
 import javax.persistence.Basic;
@@ -49,27 +51,18 @@ public class Discount implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
-    private Long id;
-    @Basic(optional = false)
-    @NotNull
+    private Integer id;
     @Column(name = "created_date")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createdDate;
-    @Basic(optional = false)
-    @NotNull
+    private String createdDate;
     @Column(name = "updated_date")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date updatedDate;
-    @Basic(optional = false)
+    private String updatedDate;
     @NotNull
     @Column(name = "active")
     private boolean active;
-    @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
     @Column(name = "discount_title")
     private String discountTitle;
-    @Basic(optional = false)
     @NotNull
     @Column(name = "discount_percent")
     private int discountPercent;
@@ -79,14 +72,22 @@ public class Discount implements Serializable {
     @ManyToOne(optional = false)
     private Admin adminId;
 
+    {
+        this.active = true;
+        DateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date today = new Date();
+        this.createdDate = formatDate.format(today);
+        this.updatedDate = formatDate.format(today);     
+    }
+    
     public Discount() {
     }
 
-    public Discount(Long id) {
+    public Discount(Integer id) {
         this.id = id;
     }
 
-    public Discount(Long id, Date createdDate, Date updatedDate, boolean active, String discountTitle, int discountPercent) {
+    public Discount(Integer id, String createdDate, String updatedDate, boolean active, String discountTitle, int discountPercent) {
         this.id = id;
         this.createdDate = createdDate;
         this.updatedDate = updatedDate;
@@ -95,27 +96,27 @@ public class Discount implements Serializable {
         this.discountPercent = discountPercent;
     }
 
-    public Long getId() {
+    public Integer  getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public Date getCreatedDate() {
+    public String getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(Date createdDate) {
+    public void setCreatedDate(String createdDate) {
         this.createdDate = createdDate;
     }
 
-    public Date getUpdatedDate() {
+    public String getUpdatedDate() {
         return updatedDate;
     }
 
-    public void setUpdatedDate(Date updatedDate) {
+    public void setUpdatedDate(String updatedDate) {
         this.updatedDate = updatedDate;
     }
 
