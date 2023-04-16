@@ -1,3 +1,4 @@
+com\tat\service\SendEmailService.class
 com\tat\repository\CustomerRepository.class
 com\tat\pojos\Discount.class
 com\tat\pojos\Post.class
@@ -41,6 +42,7 @@ com\tat\pojos\Auction.class
 com\tat\controllers\AdminController.class
 com\tat\repository\impl\AuctionRepositoryImpl.class
 com\tat\controllers\HomeController.class
+com\tat\service\impl\SendEmailServiceImpl.class
 com\tat\service\impl\DiscountServiceImpl.class
 com\tat\pojos\Comment.class
 com\tat\validator\DeliveryWebValidator.class
@@ -49,7 +51,6 @@ com\tat\repository\AdminRepository.class
 com\tat\repository\impl\PostRepositoryImpl.class
 com\tat\service\CustomerService.class
 com\tat\service\impl\PostServiceImpl.class
-com\tat\controllers\ShipperController.class
 com\tat\repository\impl\ShipperRepositoryImpl.class
 com\tat\repository\UserRepository.class
 com\tat\repository\impl\UserRepositoryImpl.class

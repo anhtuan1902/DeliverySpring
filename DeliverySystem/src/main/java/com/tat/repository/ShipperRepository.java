@@ -4,6 +4,8 @@
  */
 package com.tat.repository;
 
+import com.tat.pojos.Comment;
+import com.tat.pojos.Rating;
 import com.tat.pojos.Shipper;
 import com.tat.pojos.User;
 import java.util.List;
@@ -18,4 +20,11 @@ public interface ShipperRepository {
     Shipper getShipperById(int id);
     Shipper getShipperByUserId(User userId);
     boolean addShipper(Shipper s);
+    boolean updateShipper(int shipperId);
+    Rating getRatingByShipperId(int id);
+    Double getStatisRating(int shipperId);
+    Rating addOrUpdateRating(int rate, int shipperId);
+    List<Comment> getComments(int shipperId);
+    Comment addComment(String content, int shipperId);
+    boolean deleteComment(int commentId);
 }

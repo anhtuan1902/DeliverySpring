@@ -5,6 +5,8 @@
 package com.tat.pojos;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -18,8 +20,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -48,13 +48,11 @@ public class Comment implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "created_date")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createdDate;
+    private String createdDate;
     @Basic(optional = false)
     @NotNull
     @Column(name = "updated_date")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date updatedDate;
+    private String updatedDate;
     @Basic(optional = false)
     @NotNull
     @Column(name = "active")
@@ -71,7 +69,15 @@ public class Comment implements Serializable {
     @JoinColumn(name = "shipper_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Shipper shipperId;
-
+    
+    {
+        this.active = true;
+        DateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date today = new Date();
+        this.createdDate = formatDate.format(today);
+        this.updatedDate = formatDate.format(today);
+    }
+    
     public Comment() {
     }
 
@@ -79,7 +85,7 @@ public class Comment implements Serializable {
         this.id = id;
     }
 
-    public Comment(Integer id, Date createdDate, Date updatedDate, boolean active, String content) {
+    public Comment(Integer id, String createdDate, String updatedDate, boolean active, String content) {
         this.id = id;
         this.createdDate = createdDate;
         this.updatedDate = updatedDate;
@@ -95,19 +101,19 @@ public class Comment implements Serializable {
         this.id = id;
     }
 
-    public Date getCreatedDate() {
+    public String getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(Date createdDate) {
+    public void setCreatedDate(String createdDate) {
         this.createdDate = createdDate;
     }
 
-    public Date getUpdatedDate() {
+    public String getUpdatedDate() {
         return updatedDate;
     }
 
-    public void setUpdatedDate(Date updatedDate) {
+    public void setUpdatedDate(String updatedDate) {
         this.updatedDate = updatedDate;
     }
 

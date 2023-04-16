@@ -33,13 +33,17 @@
         <put-attribute name="title" value="Đăng kí tài khoản" />
         <put-attribute name="content" value="/WEB-INF/pages/signup.jsp" />
     </definition>
-    <definition name="customerforminfo" extends="baseLayout">
-        <put-attribute name="title" value="Thông tin người dùng" />
-        <put-attribute name="content" value="/WEB-INF/pages/customerforminfo.jsp" />
-    </definition>
     <definition name="discounts" extends="baseLayout">
         <put-attribute name="title" value="Mã giảm giá" />
         <put-attribute name="content" value="/WEB-INF/pages/discountspage.jsp" />
+    </definition>
+    <definition name="shipperadmin" extends="baseLayout">
+        <put-attribute name="title" value="Quản trị nhân viên giao hàng" />
+        <put-attribute name="content" value="/WEB-INF/pages/shipperadminpage.jsp" />
+    </definition>
+    <definition name="orderpage" extends="baseLayout">
+        <put-attribute name="title" value="Đơn hàng" />
+        <put-attribute name="content" value="/WEB-INF/pages/orderpage.jsp" />
     </definition>
 </tiles-definitions>
 

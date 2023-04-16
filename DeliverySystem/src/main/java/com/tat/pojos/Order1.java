@@ -5,6 +5,8 @@
 package com.tat.pojos;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -17,10 +19,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -28,7 +27,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author trant
  */
 @Entity
-@Table(name = "order")
+@Table(name = "order_detail")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Order1.findAll", query = "SELECT o FROM Order1 o"),
@@ -39,7 +38,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Order1.findByStatusOrder", query = "SELECT o FROM Order1 o WHERE o.statusOrder = :statusOrder")})
 public class Order1 implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 3L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -48,20 +47,17 @@ public class Order1 implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "created_date")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createdDate;
+    private String createdDate;
     @Basic(optional = false)
     @NotNull
     @Column(name = "updated_date")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date updatedDate;
+    private String updatedDate;
     @Basic(optional = false)
     @NotNull
     @Column(name = "active")
     private boolean active;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 12)
     @Column(name = "status_order")
     private String statusOrder;
     @JoinColumn(name = "auction_id", referencedColumnName = "id")
@@ -71,6 +67,14 @@ public class Order1 implements Serializable {
     @ManyToOne(optional = false)
     private Shipper shipperId;
 
+    {
+        this.active = true;
+        DateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date today = new Date();
+        this.createdDate = formatDate.format(today);
+        this.updatedDate = formatDate.format(today);
+    }
+    
     public Order1() {
     }
 
@@ -78,7 +82,7 @@ public class Order1 implements Serializable {
         this.id = id;
     }
 
-    public Order1(Integer id, Date createdDate, Date updatedDate, boolean active, String statusOrder) {
+    public Order1(Integer id, String createdDate, String updatedDate, boolean active, String statusOrder) {
         this.id = id;
         this.createdDate = createdDate;
         this.updatedDate = updatedDate;
@@ -94,19 +98,19 @@ public class Order1 implements Serializable {
         this.id = id;
     }
 
-    public Date getCreatedDate() {
+    public String getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(Date createdDate) {
+    public void setCreatedDate(String createdDate) {
         this.createdDate = createdDate;
     }
 
-    public Date getUpdatedDate() {
+    public String getUpdatedDate() {
         return updatedDate;
     }
 
-    public void setUpdatedDate(Date updatedDate) {
+    public void setUpdatedDate(String updatedDate) {
         this.updatedDate = updatedDate;
     }
 

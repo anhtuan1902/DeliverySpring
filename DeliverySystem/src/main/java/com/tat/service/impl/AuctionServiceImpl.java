@@ -5,6 +5,7 @@
 package com.tat.service.impl;
 
 import com.tat.pojos.Auction;
+import com.tat.pojos.Order1;
 import com.tat.repository.AuctionRepository;
 import com.tat.service.AuctionService;
 import java.util.List;
@@ -33,6 +34,31 @@ public class AuctionServiceImpl implements AuctionService{
     @Override
     public Auction addAuction(String content, double price, int postId) {
         return this.auctionRepository.addAuction(content, price, postId);
+    }
+
+    @Override
+    public boolean deleteAuction(int auctionId) {
+        return this.auctionRepository.deleteAuction(auctionId);
+    }
+
+    @Override
+    public Order1 getOrderByAuctionId(int autionId) {
+        return this.auctionRepository.getOrderByAuctionId(autionId);
+    }
+
+    @Override
+    public Order1 addOrder(String status, int auctionId, int shipperId) {
+        return this.auctionRepository.addOrder(status, auctionId, shipperId);
+    }
+
+    @Override
+    public List<Order1> getOrders() {
+        return this.auctionRepository.getOrders();
+    }
+
+    @Override
+    public boolean updateOrder(int orderId, String status) {
+        return this.auctionRepository.updateOrder(orderId, status);
     }
     
 }

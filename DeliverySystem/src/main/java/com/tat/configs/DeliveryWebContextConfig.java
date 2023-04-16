@@ -8,15 +8,16 @@ import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.tat.validator.DeliveryWebValidator;
 import com.tat.validator.PassValidator;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
@@ -84,6 +85,26 @@ public class DeliveryWebContextConfig implements WebMvcConfigurer {
                 "secure", true));
         return cloudinary;
     }
+    
+    @Bean
+    public JavaMailSender getJavaMailSender(){
+        JavaMailSenderImpl javaMailSenderImpl = new JavaMailSenderImpl();
+        javaMailSenderImpl.setHost("smtp.gmail.com");
+        javaMailSenderImpl.setUsername("xh25022001@gmail.com");
+        javaMailSenderImpl.setPassword("jjzdqqbfvtmysgrg");
+        javaMailSenderImpl.setPort(587);
+        
+        Properties properties = new Properties();
+        properties.put("mail.smtp.starttls.enable", "true");
+        properties.put("mail.smtp.auth", "true");
+        properties.put("mail.smtp.ssl.trust", "*");
+        properties.put("mail.transport.protocol", "smtp");
+        properties.put("mail.debug", "true");
+        
+        javaMailSenderImpl.setJavaMailProperties(properties);
+        
+        return javaMailSenderImpl;
+    }
 
     @Override
     public Validator getValidator() {
@@ -108,5 +129,4 @@ public class DeliveryWebContextConfig implements WebMvcConfigurer {
 
         return validator;
     }
-
 }

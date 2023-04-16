@@ -7,10 +7,8 @@ package com.tat.service.impl;
 import com.tat.pojos.User;
 import com.tat.repository.UserRepository;
 import com.tat.service.UserService;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
@@ -31,7 +29,7 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
-    
+
     @Autowired
     private LocalSessionFactoryBean sessionFactory;
 
@@ -42,29 +40,25 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public boolean addUser(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        DateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date today = new Date();
-        user.setUpdatedDate(formatDate.format(today));
-        user.setDateJoined(formatDate.format(today));
-        
+
         return this.userRepository.addUser(user);
     }
 
     @Override
-    public User getUsers(String username) {
-        return this.userRepository.getUsers(username);
+    public User getUserByUsername(String username) {
+        return this.userRepository.getUsers(username).get(0);
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User u = this.getUsers(username);
-        if (u == null) {
-            throw new UsernameNotFoundException("Ten dang nhap không tồn tại!");
+        List<User> users = this.userRepository.getUsers(username);
+        if (users.isEmpty()) {
+            throw new UsernameNotFoundException("Username không tồn tại!");
         }
-        
-        Set<GrantedAuthority> auth = new HashSet<>();
-        auth.add(new SimpleGrantedAuthority(u.getUserRole()));
+        User u = users.get(0);
+        Set<GrantedAuthority> authorities = new HashSet<>();
+        authorities.add(new SimpleGrantedAuthority(u.getUserRole()));
 
-        return new org.springframework.security.core.userdetails.User(u.getUsername(), u.getPassword(), auth);
+        return new org.springframework.security.core.userdetails.User(u.getUsername(), u.getPassword(), authorities);
     }
 }

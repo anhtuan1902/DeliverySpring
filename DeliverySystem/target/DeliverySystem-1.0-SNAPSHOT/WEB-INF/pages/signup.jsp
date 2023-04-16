@@ -14,7 +14,7 @@
         <div class="alert alert-danger">${errMsg}</div>
     </c:if>
     <c:url value="/signup" var="action" />
-    <form:form method="POST" action="${action}" modelAttribute="user">
+    <form:form method="POST" action="${action}" modelAttribute="user" enctype="multipart/form-data">
         <form:errors path="*" element="div" cssClass="alert alert-danger" />
         <div class="user-box">
             <form:input path="firstName" class="form-control" id="firstName" placeholder="Tên" name="firstName" />
@@ -40,11 +40,19 @@
             <form:input path="email" class="form-control" id="email" placeholder="Email" name="email" />
             <label for="email">Email</label>
         </div>
-        <div class="user-box">
-            <form:select path="userRole" class="form-control">  
-                <form:option value="CUSTOMER_ROLE" label="CUSTOMER"/>  
+        <div class="user-box mb-4">
+            <form:select path="userRole" class="form-control" id="role" onchange="chooseRole()">  
+                <form:option  value="CUSTOMER_ROLE" label="CUSTOMER"/>  
                 <form:option value="SHIPPER_ROLE" label="SHIPPER"/>  
-            </form:select>  
+            </form:select>
+        </div>
+        <div class="user-box">
+            <form:input type="file" class="form-control" id="file" path="file" name="file" />
+            <label for="file">Avatar</label>
+        </div>
+        <div class="user-box" hidden="true" id='CMND'>
+            <form:input path="CMND" class="form-control" id="CMND" placeholder="CMND" name="CMND" />
+            <label for="CMND">CMND</label>
         </div>
         <button class="btn btn-info w-100" type="submit"">
             <span></span>
@@ -55,3 +63,5 @@
         </button>
     </form:form>
 </div>
+    
+<script src="<c:url value="/js/action.js" />"></script>

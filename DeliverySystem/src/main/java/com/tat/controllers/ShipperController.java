@@ -9,8 +9,4 @@ package com.tat.controllers;
  * @author trant
  */
 
-public class ShipperController {
-    
-    
-    
-}
+

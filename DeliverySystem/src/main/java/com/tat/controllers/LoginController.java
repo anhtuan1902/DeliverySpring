@@ -5,6 +5,7 @@
 package com.tat.controllers;
 
 import com.tat.pojos.Customer;
+import com.tat.pojos.Shipper;
 import com.tat.pojos.User;
 import com.tat.service.CustomerService;
 import com.tat.service.ShipperService;
@@ -31,13 +32,12 @@ public class LoginController {
 
     @Autowired
     private UserService userService;
-    
+
     @Autowired
     private CustomerService customerService;
-    
+
     @Autowired
     private ShipperService shipperService;
-    
 
     @Autowired
     private DeliveryWebValidator userValidator;
@@ -46,20 +46,20 @@ public class LoginController {
     public void initBinder(WebDataBinder binder) {
         binder.setValidator(userValidator);
     }
-    
+
     @GetMapping(value = "/login")
     public String loginView(Model model) {
 
         return "login";
     }
-    
+
     @GetMapping(value = "/signup")
     public String registerView(ModelMap model) {
         model.addAttribute("user", new User());
-       
+
         return "signup";
     }
-    
+
     @PostMapping(value = "/signup")
     public String registerProcess(Model model, @ModelAttribute(name = "user") @Valid User user,
             BindingResult result) {
@@ -68,20 +68,33 @@ public class LoginController {
         }
 
         if (this.userService.addUser(user) == true) {
-            Customer c = new Customer();
-            c.setUserId(this.userService.getUsers(user.getUsername()));
-            if (this.customerService.addCustomer(c) == true){
-                return "redirect:/login";
-            }else{
-                model.addAttribute("errMsg", "Thông tin bị lỗi!!!");
+            User u = this.userService.getUserByUsername(user.getUsername());
+            if ("CUSTOMER_ROLE".equals(u.getUserRole())) {
+                Customer c = new Customer();
+                c.setFile(user.getFile());
+                c.setUserId(u);
+                if (this.customerService.addCustomer(c) == true) {
+                    return "redirect:/login";
+                } else {
+                    model.addAttribute("errMsg", "Thông tin bị lỗi!!!");
+                }
+            } else if ("SHIPPER_ROLE".equals(u.getUserRole())) {
+                Shipper s = new Shipper();
+                s.setCmnd(user.getCMND());
+                s.setFile(user.getFile());
+                s.setUserId(u);
+                if (this.shipperService.addShipper(s) == true) {
+                    return "redirect:/login";
+                } else {
+                    model.addAttribute("errMsg", "Thông tin bị lỗi!!!");
+                }
             }
-            
-        }else {
+        } else {
             model.addAttribute("errMsg", "Thông tin bị lỗi!!!");
         }
         return "signup";
     }
-    
+
 //    @GetMapping(value = "/customerform")
 //    public String customerFormView(ModelMap model) {
 //        Customer c = new Customer();
@@ -104,7 +117,6 @@ public class LoginController {
 //        }
 //        return "customerforminfo";
 //    }   
-    
 //    @PostMapping(value = "/shipper/register")
 //    public String registerShipper(Model model, @ModelAttribute(name = "user") @Valid User user, 
 //            @ModelAttribute(name = "shipper") @Valid Shipper shipper,
@@ -124,5 +136,4 @@ public class LoginController {
 //        }
 //        return "registershipper";
 //    }
-
 }

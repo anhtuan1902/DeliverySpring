@@ -26,10 +26,10 @@ public class LoginHandler implements AuthenticationSuccessHandler{
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication a) throws IOException, ServletException {
-        User u = this.userService.getUsers(a.getName());
+        User u = this.userService.getUserByUsername(a.getName());
         request.getSession().setAttribute("currentUser", u);
         
-        response.sendRedirect("/DeliverySystem/home");
+        response.sendRedirect("/DeliverySystem/home/posts");
     }
     
 }

@@ -24,8 +24,10 @@ C:\BTL\DeliverySpring\DeliverySystem\src\main\java\com\tat\service\UserService.j
 C:\BTL\DeliverySpring\DeliverySystem\src\main\java\com\tat\pojos\Post.java
 C:\BTL\DeliverySpring\DeliverySystem\src\main\java\com\tat\pojos\Auction.java
 C:\BTL\DeliverySpring\DeliverySystem\src\main\java\com\tat\repository\PostRepository.java
+C:\BTL\DeliverySpring\DeliverySystem\src\main\java\com\tat\service\impl\SendEmailServiceImpl.java
 C:\BTL\DeliverySpring\DeliverySystem\src\main\java\com\tat\service\AuctionService.java
 C:\BTL\DeliverySpring\DeliverySystem\src\main\java\com\tat\service\AdminService.java
+C:\BTL\DeliverySpring\DeliverySystem\src\main\java\com\tat\service\SendEmailService.java
 C:\BTL\DeliverySpring\DeliverySystem\src\main\java\com\tat\pojos\User.java
 C:\BTL\DeliverySpring\DeliverySystem\src\main\java\com\tat\service\impl\ShipperServiceImpl.java
 C:\BTL\DeliverySpring\DeliverySystem\src\main\java\com\tat\pojos\Rating.java

@@ -22,8 +22,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -47,7 +45,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Auction.findByPrice", query = "SELECT a FROM Auction a WHERE a.price = :price")})
 public class Auction implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 3L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -83,7 +81,7 @@ public class Auction implements Serializable {
     @ManyToOne(optional = false)
     private Shipper shipperId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "auctionId")
-    private Set<Order1> order1Set;
+    private Set<Order1> orderDetailSet;
     
     {
         this.hadAccept = false;
@@ -184,11 +182,11 @@ public class Auction implements Serializable {
 
     @XmlTransient
     public Set<Order1> getOrder1Set() {
-        return order1Set;
+        return orderDetailSet;
     }
 
-    public void setOrder1Set(Set<Order1> order1Set) {
-        this.order1Set = order1Set;
+    public void setOrder1Set(Set<Order1> orderDetailSet) {
+        this.orderDetailSet = orderDetailSet;
     }
 
     @Override

@@ -4,7 +4,6 @@
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>com.tat.pojos.Customer</class>
     <class>com.tat.pojos.Shipper</class>
-    <class>com.tat.pojos.Order1</class>
     <class>com.tat.pojos.Rating</class>
     <class>com.tat.pojos.Discount</class>
     <class>com.tat.pojos.User</class>
@@ -12,6 +11,7 @@
     <class>com.tat.pojos.Comment</class>
     <class>com.tat.pojos.Post</class>
     <class>com.tat.pojos.Admin</class>
+    <class>com.tat.pojos.Order1</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/dbdeliveryspring?zeroDateTimeBehavior=CONVERT_TO_NULL"/>

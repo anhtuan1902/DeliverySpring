@@ -4,7 +4,6 @@
  */
 package com.tat.controllers;
 
-import com.tat.pojos.Auction;
 import com.tat.pojos.Post;
 import com.tat.pojos.Shipper;
 import com.tat.pojos.User;
@@ -27,7 +26,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
@@ -58,6 +56,7 @@ public class HomeController {
 
     @Autowired
     private AuctionService auctionService;
+    
 
     @ModelAttribute
     public void commonAttributes(Model model, Principal principal) {
@@ -65,7 +64,9 @@ public class HomeController {
 
         model.addAttribute("auctions", this.auctionService.getAuctions());
         
-        User u = this.userService.getUsers(principal.getName());
+        
+        
+        User u = this.userService.getUserByUsername(principal.getName());
         model.addAttribute("userinfo", u);
         if (u.getUserRole().contains("SHIPPER_ROLE")) {
             model.addAttribute("extrainfo", this.shipperService.getShipperByUserId(u));
@@ -84,7 +85,7 @@ public class HomeController {
         }
         
         post.setDiscountId(this.discountService.getDiscounts().get(post.getDisId()));
-        post.setCustomerId(this.customerService.getCustomerByUserId(this.userService.getUsers(principal.getName())));
+        post.setCustomerId(this.customerService.getCustomerByUserId(this.userService.getUserByUsername(principal.getName())));
         if (this.postService.addPost(post)) {
             return "redirect:/home/posts";
         } else {
@@ -92,46 +93,40 @@ public class HomeController {
         }
         return "home";
     }
-    
-//    @RequestMapping("/posts/{postId}/addAuction")
-//    public String auctionProcess(Model model, @ModelAttribute(value = "auction") @Valid Auction auction,
-//            @PathVariable(value = "postId") int id,
-//            BindingResult rs) {
-//        if (rs.hasErrors()) {
-//            return "home";
-//        }
-//        
-//        auction.setPostId(this.postService.getPostById(id));
-//        if (this.auctionService.addAuction(auction)) {
-//            return "redirect:/home/posts";
-//        } else {
-//            model.addAttribute("errMsg", "Something wrong!!!");
-//        }
-//        return "home";
-//    }
 
     @GetMapping("/posts")
     public String postView(Model model) {
         model.addAttribute("posts", this.postService.getPosts());
         model.addAttribute("poster", new Post());
         model.addAttribute("totalAuction", this.auctionService.countAuction());
-        model.addAttribute("auction", new Auction());
         
         return "home";
     }
-    
+
     @GetMapping(path = "/shipper")
     public String shipperpage(Model model, @RequestParam Map<String, String> params) {
         List<Shipper> shippers = this.shipperService.getShippers(params);
         model.addAttribute("shippers", shippers);
+        Shipper s = new  Shipper();
 
         return "shipperpage";
     }
 
     @GetMapping(path = "/shipper/{id}")
-    public String details(Model model,
-            @PathVariable(value = "id") int id) {
+    public String details(Model model, @PathVariable(value = "id") int id, Principal principal) {
         model.addAttribute("shipper", this.shipperService.getShipperById(id));
+        model.addAttribute("statisRate", this.shipperService.getStatisRating(id));
+        if("CUSTOMER_ROLE".equals(this.userService.getUserByUsername(principal.getName()).getUserRole())){
+            model.addAttribute("rate", this.shipperService.getRatingByShipperId(id));
+        }
+        model.addAttribute("comments", this.shipperService.getComments(id));
+        
         return "shipperdetailpage";
+    }
+    
+    @GetMapping("/shipper/orders")
+    public String getViewOrder(Model model){
+        model.addAttribute("orders", this.auctionService.getOrders());
+        return "orderpage";
     }
 }

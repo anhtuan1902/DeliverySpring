@@ -5,10 +5,15 @@
 package com.tat.service.impl;
 
 import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import com.tat.pojos.Customer;
 import com.tat.pojos.User;
 import com.tat.repository.CustomerRepository;
 import com.tat.service.CustomerService;
+import java.io.IOException;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +32,15 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public boolean addCustomer(Customer c) {
-        c.setAvatar("https://res.cloudinary.com/dzk2a3akv/image/upload/v1679593418/ImageSpring/avatar-default_ptjnjt.png");
+        if (!c.getFile().isEmpty()) {
+            try {
+                Map res = this.cloudinary.uploader().upload(c.getFile().getBytes(),
+                        ObjectUtils.asMap("resource_type", "auto"));
+                c.setAvatar(res.get("secure_url").toString());
+            } catch (IOException ex) {
+                Logger.getLogger(CustomerServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
         return this.customerRepository.addCustomer(c);
     }
 

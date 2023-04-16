@@ -20,7 +20,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -68,7 +67,7 @@ public class Shipper implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "shipperId")
     private Set<Auction> auctionSet;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "shipperId")
-    private Set<Order1> order1Set;
+    private Set<Order1> orderDetailSet;
     @Transient
     private MultipartFile file;
     
@@ -158,12 +157,12 @@ public class Shipper implements Serializable {
     }
 
     @XmlTransient
-    public Set<Order1> getOrder1Set() {
-        return order1Set;
+    public Set<Order1> getOrderDetail() {
+        return orderDetailSet;
     }
 
-    public void setOrder1Set(Set<Order1> order1Set) {
-        this.order1Set = order1Set;
+    public void setOrder1Set(Set<Order1> orderDetailSet) {
+        this.orderDetailSet = orderDetailSet;
     }
 
     @Override

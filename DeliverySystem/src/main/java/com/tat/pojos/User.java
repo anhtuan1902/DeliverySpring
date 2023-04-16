@@ -5,6 +5,9 @@
 package com.tat.pojos;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -23,6 +26,7 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -92,9 +96,17 @@ public class User implements Serializable {
     private Set<Admin> adminSet;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
     private Set<Customer> customerSet;
+    @Transient
+    private MultipartFile file;
+    @Transient
+    private String CMND;
     
     {
         this.isActive = true;
+        DateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date today = new Date();
+        this.updatedDate = formatDate.format(today);
+        this.dateJoined = formatDate.format(today);
     }
     
     public User() {
@@ -265,6 +277,34 @@ public class User implements Serializable {
      */
     public void setConfirmPassword(String confirmPassword) {
         this.confirmPassword = confirmPassword;
+    }
+
+    /**
+     * @return the file
+     */
+    public MultipartFile getFile() {
+        return file;
+    }
+
+    /**
+     * @param file the file to set
+     */
+    public void setFile(MultipartFile file) {
+        this.file = file;
+    }
+
+    /**
+     * @return the CMND
+     */
+    public String getCMND() {
+        return CMND;
+    }
+
+    /**
+     * @param CMND the CMND to set
+     */
+    public void setCMND(String CMND) {
+        this.CMND = CMND;
     }
     
     

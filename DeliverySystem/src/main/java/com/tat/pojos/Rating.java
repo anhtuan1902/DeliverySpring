@@ -5,6 +5,8 @@
 package com.tat.pojos;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -17,8 +19,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -38,7 +38,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Rating.findByRate", query = "SELECT r FROM Rating r WHERE r.rate = :rate")})
 public class Rating implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 3L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -47,13 +47,11 @@ public class Rating implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "created_date")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createdDate;
+    private String createdDate;
     @Basic(optional = false)
     @NotNull
     @Column(name = "updated_date")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date updatedDate;
+    private String updatedDate;
     @Basic(optional = false)
     @NotNull
     @Column(name = "active")
@@ -61,7 +59,7 @@ public class Rating implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "rate")
-    private short rate;
+    private Integer rate;
     @JoinColumn(name = "creator_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Customer creatorId;
@@ -69,6 +67,14 @@ public class Rating implements Serializable {
     @ManyToOne(optional = false)
     private Shipper shipperId;
 
+    {
+        this.active = true;
+        DateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date today = new Date();
+        this.createdDate = formatDate.format(today);
+        this.updatedDate = formatDate.format(today);
+    }
+    
     public Rating() {
     }
 
@@ -76,7 +82,7 @@ public class Rating implements Serializable {
         this.id = id;
     }
 
-    public Rating(Integer id, Date createdDate, Date updatedDate, boolean active, short rate) {
+    public Rating(Integer id, String createdDate, String updatedDate, boolean active, Integer rate) {
         this.id = id;
         this.createdDate = createdDate;
         this.updatedDate = updatedDate;
@@ -92,19 +98,19 @@ public class Rating implements Serializable {
         this.id = id;
     }
 
-    public Date getCreatedDate() {
+    public String getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(Date createdDate) {
+    public void setCreatedDate(String createdDate) {
         this.createdDate = createdDate;
     }
 
-    public Date getUpdatedDate() {
+    public String getUpdatedDate() {
         return updatedDate;
     }
 
-    public void setUpdatedDate(Date updatedDate) {
+    public void setUpdatedDate(String updatedDate) {
         this.updatedDate = updatedDate;
     }
 
@@ -116,11 +122,11 @@ public class Rating implements Serializable {
         this.active = active;
     }
 
-    public short getRate() {
+    public Integer getRate() {
         return rate;
     }
 
-    public void setRate(short rate) {
+    public void setRate(Integer rate) {
         this.rate = rate;
     }
 
