@@ -67,12 +67,7 @@
                         <tr id="discount${o.id}">
                             <td>${o.id}</td>
                             <td>${o.auctionId.postId.productName}</td>
-                            <td><select class="form-select" aria-label="Default select example">
-                                    <option selected>${o.statusOrder}</option>
-                                    <option value="CHƯA NHẬN HÀNG">CHƯA NHẬN HÀNG</option>
-                                    <option value="ĐÃ NHẬN HÀNG">ĐÃ NHẬN HÀNG</option>
-                                    <option value="ĐÃ GIAO HÀNG">ĐÃ GIAO HÀNG</option>
-                                </select></td>
+                            <td>${o.statusOrder}</td>
                             <td>${o.auctionId.postId.fromAddress}</td>
                             <td>${o.auctionId.postId.toAddress}</td>
                             <td>${o.updatedDate}</td>

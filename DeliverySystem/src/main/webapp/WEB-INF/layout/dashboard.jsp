@@ -17,8 +17,8 @@
                 class="fas fa-project-diagram me-2"></i>Danh sách người giao hàng</a>
         <a href="<c:url value="/admin/discounts" />" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
                 class="fas fa-chart-line me-2"></i>Quản lí mã giảm giá</a>
-        <a href="<c:url value="/home/shipper/orders" />" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
-                class="fas fa-paperclip me-2"></i>Danh sách đơn hàng</a>
+        <a href="<c:url value="/admin/shipper" />" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
+                class="fas fa-paperclip me-2"></i>Quản lí người giao hàng</a>
         <a href="<c:url value="/home/shipper/orders" />" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
                 class="fas fa-shopping-cart me-2"></i>Quản lí đơn hàng</a>
         <a href="<c:url value="/logout" />" class="list-group-item list-group-item-action bg-transparent text-danger fw-bold"><i

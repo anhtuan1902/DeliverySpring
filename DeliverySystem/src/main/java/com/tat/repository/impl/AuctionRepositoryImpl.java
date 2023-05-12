@@ -10,6 +10,9 @@ import com.tat.repository.AuctionRepository;
 import com.tat.repository.PostRepository;
 import com.tat.repository.ShipperRepository;
 import com.tat.repository.UserRepository;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Query;
 import org.hibernate.HibernateException;
@@ -130,6 +133,9 @@ public class AuctionRepositoryImpl implements AuctionRepository {
         Order1 o = s.get(Order1.class, orderId);
         
         try {
+            DateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date today = new Date();
+            o.setUpdatedDate(formatDate.format(today));
             o.setStatusOrder(status);
             s.update(o);
             return true;

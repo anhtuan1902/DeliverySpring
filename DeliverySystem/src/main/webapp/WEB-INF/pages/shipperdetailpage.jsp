@@ -12,7 +12,7 @@
 <c:url value="/api/shipper/${shipper.id}/rating" var="endpoint1" />
 
 <h1 class="text-center m-4">Chi tiết người giao hàng</h1>
-<div class="card shadow" style="width: 80%">
+<div class="card shadow my-4" style="width: 80%">
     <div class="row m-3">
         <div class="col">
             <img class="rounded-circle" src="${shipper.avatar}" alt="${shipper.userId.username}" style="height: 400px; width: 90%"/>
